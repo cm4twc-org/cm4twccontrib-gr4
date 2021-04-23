@@ -62,7 +62,7 @@ class GR4(OpenWaterComponent):
     }
     _outputs_info = {
         'outgoing_water_volume_transport_along_river_channel': {
-            'units': 'm3 s-1',
+            'units': 'kg m-2 s-1',
             'description': 'streamflow at outlet'
         }
     }
@@ -86,37 +86,30 @@ class GR4(OpenWaterComponent):
             **kwargs):
 
         # some name binding to be consistent with GR4J nomenclature
-        quh = (surface_runoff + subsurface_runoff) * self.timedelta_in_seconds
+        dt = self.timedelta_in_seconds
+        quh = (surface_runoff + subsurface_runoff) * dt
         r_ = routing_store[-1]
 
         # split runoff between direct and routing
         q9 = quh * phi
-        q1 = quh * (1 - phi)
+        q1 = quh - q9
 
         # potential inter-catchment exchange
-        with np.errstate(over='ignore'):
-            f = np.where(
-                r_ > 0.0,
-                x2 * (r_ / x3) ** omega,
-                0.0
-            )
+        r_over_x3 = r_ / x3
+        f = x2 * (r_over_x3) ** omega
 
         # runoff from routing store
+        qr = r_ * (1 - (1 + (r_over_x3 ** (gamma - 1))) ** (1 / (1 - gamma)))
+
         r = r_ + q9 + f
-        r[r < 0.0] = 0.0
-        with np.errstate(divide='ignore', invalid='ignore'):
-            qr = np.where(
-                r > 0.0,
-                r * (1 - (1 + ((r / x3) ** (gamma - 1)) ** (1 / (1 - gamma)))),
-                0.0
-            )
+        r *= r > 0
 
         # runoff from direct branch
         qd = np.maximum(q1 + f, 0.0)
 
         # total runoff
         q = qr + qd
-        q[q < 0.0] = 0.0
+        q *= q > 0
 
         # update component states
         routing_store[0][:] = r
@@ -124,11 +117,13 @@ class GR4(OpenWaterComponent):
         return (
             # to exchanger
             {
-                'water_level': r
+                'water_level':
+                    r
             },
             # component outputs
             {
-                'outgoing_water_volume_transport_along_river_channel': q
+                'outgoing_water_volume_transport_along_river_channel':
+                    q / dt
             }
         )
 

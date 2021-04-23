@@ -99,50 +99,53 @@ class GR4(SubSurfaceComponent):
         # determine where energy limited conditions are
         energy_limited = pn > 0.0
 
-        # energy-limited conditions (i.e. remainder rainfall 'pn')
+        # energy-limited conditions (i.e. remaining water 'pn')
         s_over_x1 = np.where(energy_limited, s_ / x1, 0.0)
         pn_over_x1 = np.where(energy_limited, pn / x1, 0.0)
         # limited to 13, as per source code of Coron et al. (2017)
         # https://doi.org/10.1016/j.envsoft.2017.05.002
         pn_over_x1[pn_over_x1 > 13.0] = 13.0
-        tanh_pn_over_x1 = \
-            np.where(energy_limited, np.tanh(pn_over_x1), 0.0)
+        tanh_pn_over_x1 = np.tanh(pn_over_x1)
+
         ps = np.where(
             energy_limited,
-            (x1 * (1 - s_over_x1 ** alpha) * tanh_pn_over_x1) /
-            (1 + s_over_x1 * tanh_pn_over_x1),
+            (x1 * (1 - s_over_x1 ** alpha) * tanh_pn_over_x1)
+             / (1 + s_over_x1 * tanh_pn_over_x1),
             0.0
         )
+
         pr = pn - ps
 
         # update production store after infiltration and evaporation
         s = s_ + ps - es
 
         # percolation from production store
-        s[s < 0.0] = 0.0
+        s *= s > 0
         s_over_x1 = s / x1
+
         # nu is time dependent - see Ficchi et al. (2016)
         # https://doi.org/10.1016/j.jhydrol.2016.04.016
         nu = nu * (86400 / dt) ** 0.25
-        with np.errstate(divide='ignore', invalid='ignore'):
-            perc = np.where(
-                s_over_x1 > 0.0,
-                s * (1 - (1 + ((nu * s_over_x1) ** (beta - 1)))
-                     ** (1 / (1 - beta))),
-                0.0
-            )
-        pr = pr + perc
+
+        perc = (
+            s * (1 - (1 + ((nu * s_over_x1) ** (beta - 1)))
+                 ** (1 / (1 - beta)))
+        )
+
+        pr += perc
 
         # update production store after percolation
-        s = s - perc
+        s -= perc
 
         # routing through nash cascade (nres stores in series)
         sh = np.zeros(sh_.shape)
         qsh = np.zeros(sh_.shape)
+
         outflow_coefficient = (1 - np.exp((1 - nres)/x4))
+
         qsh[..., 0] = sh_[..., 0] * outflow_coefficient
         sh[..., 0] = sh_[..., 0] + pr - qsh[..., 0]
-        for i in range(1, nres, 1):
+        for i in range(1, nres):
             qsh[..., i] = sh_[..., i] * outflow_coefficient
             sh[..., i] = sh_[..., i] + qsh[..., i-1] - qsh[..., i]
         quh = qsh[..., -1]
@@ -154,9 +157,12 @@ class GR4(SubSurfaceComponent):
         return (
             # to exchanger
             {
-                'surface_runoff': np.zeros(self.spaceshape, dtype_float()),
-                'subsurface_runoff': quh / dt,
-                'soil_water_stress': s / x1
+                'surface_runoff': 
+                    np.zeros(self.spaceshape, dtype_float()),
+                'subsurface_runoff': 
+                    quh / dt,
+                'soil_water_stress': 
+                    s / x1
             },
             # component outputs
             {}
