@@ -92,8 +92,8 @@ class GR4(SurfaceLayerComponent):
         # determine where water-/energy-limited conditions are
         water_limited = e_minus_p >= 0.0
         energy_limited = ~water_limited
-
-		# --------------------------------------------------------------
+        
+        # --------------------------------------------------------------
         # under water-limited conditions (i.e. remaining energy 'en')
         # >-------------------------------------------------------------
         
