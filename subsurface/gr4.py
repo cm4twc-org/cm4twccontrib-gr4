@@ -110,7 +110,7 @@ class GR4(SubSurfaceComponent):
         ps = np.where(
             energy_limited,
             (x1 * (1 - s_over_x1 ** alpha) * tanh_pn_over_x1)
-             / (1 + s_over_x1 * tanh_pn_over_x1),
+            / (1 + s_over_x1 * tanh_pn_over_x1),
             0.0
         )
 
@@ -143,11 +143,12 @@ class GR4(SubSurfaceComponent):
 
         outflow_coefficient = (1 - np.exp((1 - nres)/x4))
 
-        qsh[..., 0] = sh_[..., 0] * outflow_coefficient
+        qsh[...] = sh_[...] * outflow_coefficient
         sh[..., 0] = sh_[..., 0] + pr - qsh[..., 0]
-        for i in range(1, nres):
-            qsh[..., i] = sh_[..., i] * outflow_coefficient
-            sh[..., i] = sh_[..., i] + qsh[..., i-1] - qsh[..., i]
+        sh[..., 1:nres] = (
+            sh_[..., 1:nres] + qsh[..., 0:nres-1] - qsh[..., 1:nres]
+        )
+
         quh = qsh[..., -1]
 
         # update component states
