@@ -14,9 +14,9 @@ class GR4(OpenWaterComponent):
     model has recently been expressed in a state-space formulation
     (`Santos et al., 2018`_).
 
-    This version of the GR4 model is based on its state-space formulation
-    and it can be used at any spatial resolution provided the parameters
-    featuring 'timedelta' in their units are adjusted accordingly
+    This version of the GR4 model is based on its explicit state-space
+    formulation and it can be used at any temporal resolution provided the
+    parameters featuring 'timedelta' in their units are adjusted accordingly
     (see `Ficchì et al., 2016`_).
 
     The subsurface component of the GR4 model comprises the runoff
