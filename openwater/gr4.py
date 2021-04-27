@@ -96,10 +96,10 @@ class GR4(OpenWaterComponent):
 
         # potential inter-catchment exchange
         r_over_x3 = r_ / x3
-        f = x2 * (r_over_x3) ** omega
+        f = x2 * r_over_x3 ** omega
 
         # runoff from routing store
-        qr = r_ * (1 - (1 + (r_over_x3 ** (gamma - 1))) ** (1 / (1 - gamma)))
+        qr = r_ * (1 - (1 + r_over_x3 ** (gamma - 1)) ** (1 / (1 - gamma)))
 
         r = r_ + q9 + f
         r *= r > 0
