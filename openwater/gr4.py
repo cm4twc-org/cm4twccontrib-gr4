@@ -101,7 +101,7 @@ class GR4(OpenWaterComponent):
         # runoff from routing store
         qr = r_ * (1 - (1 + r_over_x3 ** (gamma - 1)) ** (1 / (1 - gamma)))
 
-        r = r_ + q9 + f
+        r = r_ + q9 + f - qr
         r *= r > 0
 
         # runoff from direct branch
