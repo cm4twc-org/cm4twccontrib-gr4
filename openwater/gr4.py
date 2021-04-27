@@ -99,9 +99,11 @@ class GR4(OpenWaterComponent):
         f = x2 * r_over_x3 ** omega
 
         # runoff from routing store
-        qr = r_ * (1 - (1 + r_over_x3 ** (gamma - 1)) ** (1 / (1 - gamma)))
+        r = r_ + q9 + f
+        r_over_x3 = r / x3
+        qr = r * (1 - (1 + r_over_x3 ** (gamma - 1)) ** (1 / (1 - gamma)))
 
-        r = r_ + q9 + f - qr
+        r -= qr
         r *= r > 0
 
         # runoff from direct branch
