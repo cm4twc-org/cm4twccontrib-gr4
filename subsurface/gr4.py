@@ -141,13 +141,15 @@ class GR4(SubSurfaceComponent):
         sh = np.zeros(sh_.shape)
         qsh = np.zeros(sh_.shape)
 
-        outflow_coefficient = (1 - np.exp((1 - nres)/x4))
+        outflow_coefficient = 1 - np.exp((1 - nres) / x4)
 
-        qsh[...] = sh_[...] * outflow_coefficient
-        sh[..., 0] = sh_[..., 0] + pr - qsh[..., 0]
-        sh[..., 1:nres] = (
-            sh_[..., 1:nres] + qsh[..., 0:nres-1] - qsh[..., 1:nres]
-        )
+        sh[..., 0] = sh_[..., 0] + pr
+        qsh[..., 0] = sh[..., 0] * outflow_coefficient
+        sh[..., 0] -= qsh[..., 0]
+        for i in range(1, nres):
+            sh[..., i] = sh_[..., i] + qsh[..., i - 1]
+            qsh[..., i] = sh[..., i] * outflow_coefficient
+            sh[..., i] -= qsh[..., i]
 
         quh = qsh[..., -1]
 
