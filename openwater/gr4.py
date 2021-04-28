@@ -4,20 +4,20 @@ from cm4twc.components import OpenWaterComponent
 
 
 class GR4(OpenWaterComponent):
-    """
-    The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
-    bucket-style rainfall-runoff model featuring four parameters. It is
-    typically used as a daily model, i.e. GR4J model (`Perrin et al., 2003`_)
-    where J stands for "journalier", meaning daily in French. It can also
-    be used at other temporal resolutions, e.g. hourly, provided an adjustment
-    in its parameter values is performed (`Ficchì et al., 2016`_). The
-    model has recently been expressed in a state-space formulation
+    """The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
+    bucket-type rainfall-runoff model featuring four parameters. It is
+    typically used as a daily model, i.e. GR4J model (`Perrin et al., 2003`_).
+    It can also be used at other temporal resolutions, e.g. hourly in
+    GR4H model, provided an adjustment in its time-dependent parameter
+    and constant values is performed (`Ficchì et al., 2016`_). The model
+    has recently been expressed in a state-space formulation
     (`Santos et al., 2018`_).
 
     This version of the GR4 model is based on its explicit state-space
-    formulation and it can be used at any temporal resolution provided the
-    parameters featuring 'timedelta' in their units are adjusted accordingly
-    (see `Ficchì et al., 2016`_).
+    formulation and its recommended temporal resolution are daily or hourly.
+    With either of these resolutions, time-dependent parameters x2, x3, x4,
+    and constant nu are expected for the daily case and they are adjusted
+    accordingly if temporal resolution is not daily.
 
     The subsurface component of the GR4 model comprises the runoff
     generation and runoff routing processes.
@@ -35,7 +35,7 @@ class GR4(OpenWaterComponent):
 
     _parameters_info = {
         'x2': {
-            'units': 'kg m-2 timedelta-1'
+            'units': 'kg m-2 d-1'
         },
         'x3': {
             'units': 'kg m-2'
@@ -89,6 +89,11 @@ class GR4(OpenWaterComponent):
         dt = self.timedelta_in_seconds
         quh = (surface_runoff + subsurface_runoff) * dt
         r_ = routing_store[-1]
+
+        # convert time dependent parameters and constants
+        # Ficchì et al. (2016) https://doi.org/10.1016/j.jhydrol.2016.04.016
+        x2 = x2 * (86400 / dt) ** -0.125
+        x3 = x3 * (86400 / dt) ** 0.25
 
         # split runoff between direct and routing
         q9 = quh * phi
