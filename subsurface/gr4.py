@@ -99,7 +99,10 @@ class GR4(SubSurfaceComponent):
         # determine where energy limited conditions are
         energy_limited = pn > 0.0
 
-        # energy-limited conditions (i.e. remaining water 'pn')
+        # --------------------------------------------------------------
+        # under energy-limited conditions (i.e. remaining water 'pn')
+        # >-------------------------------------------------------------
+
         s_over_x1 = s_ / x1
         pn_over_x1 = pn / x1
         # limited to 13, as per source code of Coron et al. (2017)
@@ -115,6 +118,8 @@ class GR4(SubSurfaceComponent):
         )
 
         pr = pn - ps
+
+        # -------------------------------------------------------------<
 
         # update production store after infiltration and evaporation
         s = s_ + ps - es
