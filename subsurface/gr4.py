@@ -100,8 +100,8 @@ class GR4(SubSurfaceComponent):
         energy_limited = pn > 0.0
 
         # energy-limited conditions (i.e. remaining water 'pn')
-        s_over_x1 = np.where(energy_limited, s_ / x1, 0.0)
-        pn_over_x1 = np.where(energy_limited, pn / x1, 0.0)
+        s_over_x1 = s_ / x1
+        pn_over_x1 = pn / x1
         # limited to 13, as per source code of Coron et al. (2017)
         # https://doi.org/10.1016/j.envsoft.2017.05.002
         pn_over_x1[pn_over_x1 > 13.0] = 13.0
