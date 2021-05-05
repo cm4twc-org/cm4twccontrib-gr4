@@ -28,10 +28,10 @@ class TestContribution(unittest.TestCase):
 
         area = 1844  # km2
 
-        x1 = 346.9290884  # kg m-2
-        x2 = -0.0458  # kg m-2 d-1
-        x3 = 119.780094  # kg m-2
-        x4 = 0.9384945  # d
+        x1 = (346.9290884, 'kg m-2')
+        x2 = (-0.0458,  'kg m-2 d-1')
+        x3 = (119.780094,  'kg m-2')
+        x4 = (0.9384945, 'd')
 
         sl = gr4_surfacelayer(
             saving_directory='out',
