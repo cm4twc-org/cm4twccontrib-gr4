@@ -49,7 +49,7 @@ class GR4(SubSurfaceComponent):
         'nash_cascade_stores': {
             'description': 'stores in Nash cascade',
             'units': 'kg m-2',
-            'divisions': 11
+            'divisions': 'nres'
         }
     }
     _constants_info = {
@@ -67,6 +67,11 @@ class GR4(SubSurfaceComponent):
             'description': 'percolation coefficient',
             'units': '1',
             'default_value': 4/9
+        },
+        'nres': {
+            'description': 'number of stores in Nash cascade',
+            'units': '1',
+            'default_value': 11
         }
     }
 
@@ -87,7 +92,7 @@ class GR4(SubSurfaceComponent):
             # component states
             production_store, nash_cascade_stores,
             # component constants
-            alpha, beta, nu,
+            alpha, beta, nu, nres,
             **kwargs):
 
         # some name binding to be consistent with GR4J nomenclature
@@ -97,7 +102,6 @@ class GR4(SubSurfaceComponent):
               + evaporation_ponded_water) * dt
         s_ = production_store[-1]
         sh_ = nash_cascade_stores[-1]
-        nres = sh_.shape[-1]
 
         # convert time dependent parameters and constants
         # Ficchì et al. (2016) https://doi.org/10.1016/j.jhydrol.2016.04.016
