@@ -47,7 +47,7 @@ class GR4(SubSurfaceComponent):
             'units': 'kg m-2'
         },
         'nash_cascade_stores': {
-            'description': 'number of stores in Nash cascade (nres)',
+            'description': 'stores in Nash cascade',
             'units': 'kg m-2',
             'divisions': 11
         }
@@ -55,15 +55,18 @@ class GR4(SubSurfaceComponent):
     _constants_info = {
         'alpha': {
             'description': 'production precipitation exponent',
-            'units': '1'
+            'units': '1',
+            'default_value': 2
         },
         'beta': {
             'description': 'percolation exponent',
-            'units': '1'
+            'units': '1',
+            'default_value': 5
         },
         'nu': {
             'description': 'percolation coefficient',
-            'units': '1'
+            'units': '1',
+            'default_value': 4/9
         }
     }
 
@@ -84,7 +87,7 @@ class GR4(SubSurfaceComponent):
             # component states
             production_store, nash_cascade_stores,
             # component constants
-            alpha=2, beta=5, nu=4/9,
+            alpha, beta, nu,
             **kwargs):
 
         # some name binding to be consistent with GR4J nomenclature

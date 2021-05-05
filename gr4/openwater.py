@@ -49,15 +49,18 @@ class GR4(OpenWaterComponent):
     _constants_info = {
         'gamma': {
             'description': 'routing outflow exponent',
-            'units': '1'
+            'units': '1',
+            'default_value': 5
         },
         'omega': {
             'description': 'exchange exponent',
-            'units': '1'
+            'units': '1',
+            'default_value': 3.5
         },
         'phi': {
             'description': 'partition between routing store and direct flow',
-            'units': '1'
+            'units': '1',
+            'default_value': 0.9
         }
     }
     _outputs_info = {
@@ -82,7 +85,7 @@ class GR4(OpenWaterComponent):
             # component states
             routing_store,
             # component constants
-            gamma=5, omega=3.5, phi=0.9,
+            gamma, omega, phi,
             **kwargs):
 
         # some name binding to be consistent with GR4J nomenclature

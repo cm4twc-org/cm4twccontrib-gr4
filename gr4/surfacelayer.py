@@ -52,7 +52,8 @@ class GR4(SurfaceLayerComponent):
     _constants_info = {
         'alpha': {
             'description': 'production precipitation exponent',
-            'units': '1'
+            'units': '1',
+            'default_value': 2
         }
     }
     _outputs_info = {
@@ -75,7 +76,7 @@ class GR4(SurfaceLayerComponent):
             x1,
             # component states
             # component constants
-            alpha=2,
+            alpha,
             **kwargs):
 
         # some name binding to be consistent with GR4J nomenclature
