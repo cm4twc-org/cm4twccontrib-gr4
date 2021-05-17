@@ -2,9 +2,9 @@ import unittest
 from datetime import datetime, timedelta
 import cm4twc
 
-from gr4.surfacelayer import GR4 as gr4_surfacelayer
-from gr4.subsurface import GR4 as gr4_subsurface
-from gr4.openwater import GR4 as gr4_openwater
+from cm4twccontrib.gr4 import SurfaceLayerComponent
+from cm4twccontrib.gr4 import SubSurfaceComponent
+from cm4twccontrib.gr4 import OpenWaterComponent
 
 
 class TestContribution(unittest.TestCase):
@@ -29,11 +29,11 @@ class TestContribution(unittest.TestCase):
         area = 1844  # km2
 
         x1 = (346.9290884, 'kg m-2')
-        x2 = (-0.0458,  'kg m-2 d-1')
-        x3 = (119.780094,  'kg m-2')
+        x2 = (-0.0458, 'kg m-2 d-1')
+        x3 = (119.780094, 'kg m-2')
         x4 = (0.9384945, 'd')
 
-        sl = gr4_surfacelayer(
+        sl = SurfaceLayerComponent(
             saving_directory='out',
             timedomain=td,
             spacedomain=sd,
@@ -43,7 +43,7 @@ class TestContribution(unittest.TestCase):
             }
         )
 
-        ss = gr4_subsurface(
+        ss = SubSurfaceComponent(
             saving_directory='out',
             timedomain=td,
             spacedomain=sd,
@@ -54,7 +54,7 @@ class TestContribution(unittest.TestCase):
             }
         )
 
-        ow = gr4_openwater(
+        ow = OpenWaterComponent(
             saving_directory='out',
             timedomain=td,
             spacedomain=sd,
@@ -89,10 +89,11 @@ class TestContribution(unittest.TestCase):
             'out/test-gr4j_openwater_run_records_daily.nc'
         )
 
-        fld_name = 'outgoing_water_volume_transport_along_river_channel'
+        var_name = 'outgoing_water_volume_transport_along_river_channel'
 
         self.assertTrue(
-            from_file[fld_name].equals(from_model[fld_name], verbose=3)
+            from_file[var_name].field.equals(from_model[var_name].field,
+                                             verbose=3)
         )
 
 

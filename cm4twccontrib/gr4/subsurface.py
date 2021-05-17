@@ -1,11 +1,12 @@
 import numpy as np
 
-from cm4twc.components import SubSurfaceComponent
+import cm4twc
 from cm4twc.settings import dtype_float
 
 
-class GR4(SubSurfaceComponent):
-    """The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
+class SubSurfaceComponent(cm4twc.components.SubSurfaceComponent):
+    """
+    The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
     bucket-type rainfall-runoff model featuring four parameters. It is
     typically used as a daily model, i.e. GR4J model (`Perrin et al., 2003`_).
     It can also be used at other temporal resolutions, e.g. hourly in
