@@ -26,7 +26,7 @@ setup(
             'https://github.com/hydro-jules/cm4twccontrib-{}'.format(pkg_name.lower())
     },
 
-    license='GPL-3',
+    license='GPL-2',
 
     classifiers=[
         'Development Status :: 4 - Beta',

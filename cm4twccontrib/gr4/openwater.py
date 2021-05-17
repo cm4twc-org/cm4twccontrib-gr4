@@ -20,8 +20,9 @@ class OpenWaterComponent(cm4twc.components.OpenWaterComponent):
     and constant nu are expected for the daily case and they are adjusted
     accordingly if temporal resolution is not daily.
 
-    The subsurface component of the GR4 model comprises the runoff
-    generation and runoff routing processes.
+    The openwater component of the GR4 model comprises the runoff
+    routing using the routing store, and the inter-catchment groundwater
+    exchange.
 
     .. _`Perrin et al., 2003`: https://doi.org/10.1016/s0022-1694(03)00225-7
     .. _`Ficchì et al., 2016`: https://doi.org/10.1016/j.jhydrol.2016.04.016

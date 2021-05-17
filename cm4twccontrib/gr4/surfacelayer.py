@@ -21,8 +21,8 @@ class SurfaceLayerComponent(cm4twc.components.SurfaceLayerComponent):
     and constant nu are expected for the daily case and they are adjusted
     accordingly if temporal resolution is not daily.
 
-    The subsurface component of the GR4 model comprises the runoff
-    generation and runoff routing processes.
+    The surface layer component of the GR4 model comprises the
+    interception scheme.
 
     .. _`Perrin et al., 2003`: https://doi.org/10.1016/s0022-1694(03)00225-7
     .. _`Ficchì et al., 2016`: https://doi.org/10.1016/j.jhydrol.2016.04.016
