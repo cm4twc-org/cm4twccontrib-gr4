@@ -26,7 +26,7 @@ class TestContribution(unittest.TestCase):
         ds = cm4twc.DataSet(['in/rainfall_flux.nc',
                              'in/potential_water_evapotranspiration_flux.nc'])
 
-        area = 1844  # km2
+        # area = (1844, 'km2')
 
         x1 = (346.9290884, 'kg m-2')
         x2 = (-0.0458, 'kg m-2 d-1')
@@ -78,6 +78,10 @@ class TestContribution(unittest.TestCase):
             subsurface=ss,
             openwater=ow
         )
+
+        model.to_yaml()
+
+        model = cm4twc.Model.from_yaml('out/test-gr4j.yml')
 
         model.simulate()
 
