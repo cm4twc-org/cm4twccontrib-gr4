@@ -59,7 +59,7 @@ class SurfaceLayerComponent(cm4twc.components.SurfaceLayerComponent):
     }
     _outputs_info = {
         'actual_water_evapotranspiration_flux': {
-            'units': 'kg m-2'
+            'units': 'kg m-2 s-1'
         }
     }
 
