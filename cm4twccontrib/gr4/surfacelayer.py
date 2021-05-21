@@ -16,10 +16,10 @@ class SurfaceLayerComponent(cm4twc.components.SurfaceLayerComponent):
     (`Santos et al., 2018`_).
 
     This version of the GR4 model is based on its explicit state-space
-    formulation and its recommended temporal resolution are daily or hourly.
-    With either of these resolutions, time-dependent parameters x2, x3, x4,
-    and constant nu are expected for the daily case and they are adjusted
-    accordingly if temporal resolution is not daily.
+    formulation and its recommended temporal resolutions are daily or hourly.
+    With either of these resolutions, time-dependent parameters *x2*, *x3*,
+    *x4*, and constant *nu* are expected for the daily case and they are
+    adjusted accordingly if temporal resolution is not daily.
 
     The surface layer component of the GR4 model comprises the
     interception scheme.

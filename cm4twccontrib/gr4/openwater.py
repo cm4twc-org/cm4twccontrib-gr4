@@ -15,10 +15,10 @@ class OpenWaterComponent(cm4twc.components.OpenWaterComponent):
     (`Santos et al., 2018`_).
 
     This version of the GR4 model is based on its explicit state-space
-    formulation and its recommended temporal resolution are daily or hourly.
-    With either of these resolutions, time-dependent parameters x2, x3, x4,
-    and constant nu are expected for the daily case and they are adjusted
-    accordingly if temporal resolution is not daily.
+    formulation and its recommended temporal resolutions are daily or hourly.
+    With either of these resolutions, time-dependent parameters *x2*, *x3*,
+    *x4*, and constant *nu* are expected for the daily case and they are
+    adjusted accordingly if temporal resolution is not daily.
 
     The openwater component of the GR4 model comprises the runoff
     routing using the routing store, and the inter-catchment groundwater
