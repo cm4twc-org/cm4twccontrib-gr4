@@ -4,7 +4,7 @@ import cm4twc
 from cm4twc.settings import dtype_float
 
 
-class SubSurfaceComponent(cm4twc.components.SubSurfaceComponent):
+class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
     """
     The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
     bucket-type rainfall-runoff model featuring four parameters. It is

@@ -3,7 +3,7 @@ import numpy as np
 import cm4twc
 
 
-class OpenWaterComponent(cm4twc.components.OpenWaterComponent):
+class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
     """
     The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
     bucket-type rainfall-runoff model featuring four parameters. It is
