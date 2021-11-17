@@ -2,11 +2,12 @@ A cm4twc-compliant version of the rainfall-runoff model SMART
 -------------------------------------------------------------
 
 The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
-bucket-type rainfall-runoff model featuring four parameters. It is
-typically used as a daily model, i.e. GR4J model (`Perrin et al., 2003`_).
-It can also be used at other temporal resolutions, e.g. hourly in
-GR4H model, provided an adjustment in its time-dependent parameter
-and constant values is performed (`Ficchì et al., 2016`_). The model
+bucket-type rainfall-runoff model featuring four parameters.
+
+It is typically used as a daily model, i.e. GR4J model
+(`Perrin et al., 2003`_). It can also be used at other temporal resolutions,
+e.g. hourly in GR4H model, provided an adjustment in its time-dependent
+parameter and constant values is performed (`Ficchì et al., 2016`_). The model
 has recently been expressed in a state-space formulation
 (`Santos et al., 2018`_).
 
