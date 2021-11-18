@@ -80,8 +80,8 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
                    # component states
                    production_store, nash_cascade_stores,
                    **kwargs):
-        production_store[-1][:] = 0.0
-        nash_cascade_stores[-1][:] = 0.0
+        production_store.set_timestep(-1, 0.0)
+        nash_cascade_stores.set_timestep(-1, 0.0)
 
     def run(self,
             # from exchanger
@@ -101,8 +101,8 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
         pn = (throughfall + snowmelt) * dt
         es = (transpiration + evaporation_soil_surface
               + evaporation_ponded_water) * dt
-        s_ = production_store[-1]
-        sh_ = nash_cascade_stores[-1]
+        s_ = production_store.get_timestep(-1)
+        sh_ = nash_cascade_stores.get_timestep(-1)
 
         # convert time dependent parameters and constants
         # Ficchì et al. (2016) https://doi.org/10.1016/j.jhydrol.2016.04.016
@@ -168,8 +168,8 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
         quh = qsh[..., -1]
 
         # update component states
-        production_store[0][:] = s
-        nash_cascade_stores[0][:] = sh
+        production_store.set_timestep(0, s)
+        nash_cascade_stores.set_timestep(0, sh)
 
         return (
             # to exchanger

@@ -76,7 +76,7 @@ class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
                    # component states
                    routing_store,
                    **kwargs):
-        routing_store[-1][:] = 0.0
+        routing_store.set_timestep(-1, 0.0)
 
     def run(self,
             # from exchanger
@@ -93,7 +93,7 @@ class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
         # some name binding to be consistent with GR4J nomenclature
         dt = self.timedelta_in_seconds
         quh = (surface_runoff + subsurface_runoff) * dt
-        r_ = routing_store[-1]
+        r_ = routing_store.get_timestep(-1)
 
         # convert time dependent parameters and constants
         # Ficchì et al. (2016) https://doi.org/10.1016/j.jhydrol.2016.04.016
@@ -124,7 +124,7 @@ class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
         q *= q > 0
 
         # update component states
-        routing_store[0][:] = r
+        routing_store.set_timestep(0, r)
 
         return (
             # to exchanger
