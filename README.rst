@@ -1,4 +1,4 @@
-A cm4twc-compliant version of the rainfall-runoff model SMART
+A unifhy-compliant version of the rainfall-runoff model SMART
 -------------------------------------------------------------
 
 The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a

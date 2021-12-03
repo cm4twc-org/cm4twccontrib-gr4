@@ -1,10 +1,9 @@
 import numpy as np
 
-import cm4twc
-from cm4twc.settings import dtype_float
+import unifhy
 
 
-class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
+class SubSurfaceComponent(unifhy.component.SubSurfaceComponent):
     """The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
     bucket-type rainfall-runoff model featuring four parameters.
 
@@ -88,7 +87,7 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
                    # component states
                    production_store, nash_cascade_stores,
                    **kwargs):
-        
+
         if not self.initialised_states:
             production_store.set_timestep(-1, 0.0)
             nash_cascade_stores.set_timestep(-1, 0.0)

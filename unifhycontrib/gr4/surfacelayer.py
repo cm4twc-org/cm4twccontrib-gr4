@@ -1,10 +1,9 @@
 import numpy as np
 
-import cm4twc
-from cm4twc.settings import dtype_float
+import unifhy
 
 
-class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
+class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
     """The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
     bucket-type rainfall-runoff model featuring four parameters.
 

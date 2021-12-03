@@ -1,8 +1,8 @@
 import unittest
 from datetime import datetime, timedelta
-import cm4twc
+import unifhy
 
-from cm4twccontrib.gr4 import (
+from unifhycontrib.gr4 import (
     SurfaceLayerComponent, SubSurfaceComponent, OpenWaterComponent
 )
 
@@ -10,20 +10,20 @@ from cm4twccontrib.gr4 import (
 class TestContribution(unittest.TestCase):
 
     def test_gr4j(self):
-        td = cm4twc.TimeDomain.from_start_end_step(
+        td = unifhy.TimeDomain.from_start_end_step(
             start=datetime(2001, 1, 1, 0, 0, 0),
             end=datetime(2002, 1, 1, 0, 0, 0),
             step=timedelta(days=1)
         )
 
-        sd = cm4twc.LatLonGrid.from_extent_and_resolution(
+        sd = unifhy.LatLonGrid.from_extent_and_resolution(
             latitude_extent=(51, 52),
             latitude_resolution=1,
             longitude_extent=(0, 1),
             longitude_resolution=1
         )
 
-        ds = cm4twc.DataSet(['in/rainfall_flux.nc',
+        ds = unifhy.DataSet(['in/rainfall_flux.nc',
                              'in/potential_water_evapotranspiration_flux.nc'])
 
         # area = (1844, 'km2')
@@ -70,7 +70,7 @@ class TestContribution(unittest.TestCase):
             }
         )
 
-        model = cm4twc.Model(
+        model = unifhy.Model(
             identifier='test-gr4j',
             config_directory='out',
             saving_directory='out',
@@ -81,15 +81,15 @@ class TestContribution(unittest.TestCase):
 
         model.to_yaml()
 
-        model = cm4twc.Model.from_yaml('out/test-gr4j.yml')
+        model = unifhy.Model.from_yaml('out/test-gr4j.yml')
 
         model.simulate()
 
-        from_file = cm4twc.DataSet(
+        from_file = unifhy.DataSet(
             'in/outgoing_water_volume_transport_along_river_channel.nc'
         )
 
-        from_model = cm4twc.DataSet(
+        from_model = unifhy.DataSet(
             'out/test-gr4j_openwater_run_records_daily.nc'
         )
 
