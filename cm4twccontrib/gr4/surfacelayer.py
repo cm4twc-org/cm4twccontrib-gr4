@@ -35,6 +35,13 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
     :licence: GPL-2.0
     """
 
+    _inwards = {
+        'soil_water_stress_for_transpiration'
+    }
+    _outwards = {
+        'canopy_liquid_throughfall_and_snow_melt_flux',
+        'transpiration_flux_from_root_uptake'
+    }
     _inputs_info = {
         'rainfall_flux': {
             'units': 'kg m-2 s-1',
@@ -70,7 +77,7 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
 
     def run(self,
             # from exchanger
-            soil_water_stress, water_level,
+            soil_water_stress_for_transpiration,
             # component inputs
             rainfall_flux, potential_water_evapotranspiration_flux,
             # component parameters
@@ -84,7 +91,7 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         dt = self.timedelta_in_seconds
         p = rainfall_flux * dt
         e = potential_water_evapotranspiration_flux * dt
-        s_over_x1 = soil_water_stress
+        s_over_x1 = soil_water_stress_for_transpiration
 
         # interception
         e_minus_p = e - p
@@ -130,18 +137,10 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         return (
             # to exchanger
             {
-                'throughfall':
+                'canopy_liquid_throughfall_and_snow_melt_flux':
                     pn / dt,
-                'snowmelt':
-                    np.zeros(self.spaceshape, dtype_float()),
-                'transpiration':
-                    np.zeros(self.spaceshape, dtype_float()),
-                'evaporation_soil_surface':
-                    es / dt,
-                'evaporation_ponded_water':
-                    np.zeros(self.spaceshape, dtype_float()),
-                'evaporation_openwater':
-                    np.zeros(self.spaceshape, dtype_float())
+                'transpiration_flux_from_root_uptake':
+                    es / dt
             },
             # component outputs
             {

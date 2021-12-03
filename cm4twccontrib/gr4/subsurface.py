@@ -35,6 +35,14 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
     :licence: GPL-2.0
     """
 
+    _inwards = {
+        'canopy_liquid_throughfall_and_snow_melt_flux',
+        'transpiration_flux_from_root_uptake'
+    }
+    _outwards = {
+        'surface_runoff_flux_delivered_to_rivers',
+        'soil_water_stress_for_transpiration'
+    }
     _parameters_info = {
         'x1': {
             'units': 'kg m-2'
@@ -87,8 +95,8 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
 
     def run(self,
             # from exchanger
-            transpiration, evaporation_soil_surface, evaporation_ponded_water,
-            throughfall, snowmelt,
+            canopy_liquid_throughfall_and_snow_melt_flux,
+            transpiration_flux_from_root_uptake,
             # component inputs
             # component parameters
             x1, x4,
@@ -100,9 +108,8 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
 
         # some name binding to be consistent with GR4J nomenclature
         dt = self.timedelta_in_seconds
-        pn = (throughfall + snowmelt) * dt
-        es = (transpiration + evaporation_soil_surface
-              + evaporation_ponded_water) * dt
+        pn = canopy_liquid_throughfall_and_snow_melt_flux * dt
+        es = transpiration_flux_from_root_uptake * dt
         s_ = production_store.get_timestep(-1)
         sh_ = nash_cascade_stores.get_timestep(-1)
 
@@ -176,11 +183,9 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
         return (
             # to exchanger
             {
-                'surface_runoff': 
-                    np.zeros(self.spaceshape, dtype_float()),
-                'subsurface_runoff': 
+                'surface_runoff_flux_delivered_to_rivers':
                     quh / dt,
-                'soil_water_stress': 
+                'soil_water_stress_for_transpiration':
                     s / x1
             },
             # component outputs

@@ -35,6 +35,10 @@ class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
     :licence: GPL-2.0
     """
 
+    _inwards = {
+        'surface_runoff_flux_delivered_to_rivers'
+    }
+    _outwards = {}
     _parameters_info = {
         'x2': {
             'units': 'kg m-2 d-1'
@@ -82,7 +86,7 @@ class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
 
     def run(self,
             # from exchanger
-            surface_runoff, subsurface_runoff, evaporation_openwater,
+            surface_runoff_flux_delivered_to_rivers,
             # component inputs
             # component parameters
             x2, x3,
@@ -94,7 +98,7 @@ class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
 
         # some name binding to be consistent with GR4J nomenclature
         dt = self.timedelta_in_seconds
-        quh = (surface_runoff + subsurface_runoff) * dt
+        quh = surface_runoff_flux_delivered_to_rivers * dt
         r_ = routing_store.get_timestep(-1)
 
         # convert time dependent parameters and constants
@@ -130,10 +134,7 @@ class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
 
         return (
             # to exchanger
-            {
-                'water_level':
-                    r
-            },
+            {},
             # component outputs
             {
                 'outgoing_water_volume_transport_along_river_channel':
