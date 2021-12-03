@@ -80,8 +80,10 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
                    # component states
                    production_store, nash_cascade_stores,
                    **kwargs):
-        production_store.set_timestep(-1, 0.0)
-        nash_cascade_stores.set_timestep(-1, 0.0)
+        
+        if not self.initialised_states:
+            production_store.set_timestep(-1, 0.0)
+            nash_cascade_stores.set_timestep(-1, 0.0)
 
     def run(self,
             # from exchanger

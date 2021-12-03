@@ -76,7 +76,9 @@ class OpenWaterComponent(cm4twc.component.OpenWaterComponent):
                    # component states
                    routing_store,
                    **kwargs):
-        routing_store.set_timestep(-1, 0.0)
+
+        if not self.initialised_states:
+            routing_store.set_timestep(-1, 0.0)
 
     def run(self,
             # from exchanger
