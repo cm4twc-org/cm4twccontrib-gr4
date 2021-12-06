@@ -1,5 +1,5 @@
-A unifhy-compliant version of the rainfall-runoff model SMART
--------------------------------------------------------------
+A unifhy-compliant version of the rainfall-runoff model GR4
+-----------------------------------------------------------
 
 The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
 bucket-type rainfall-runoff model featuring four parameters.
