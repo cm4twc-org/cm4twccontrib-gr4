@@ -11,6 +11,17 @@ with open("unifhycontrib/{}/version.py".format(pkg_name.lower()), 'r') as fv:
     exec(fv.read())
 
 
+def requirements(filename):
+    requires = []
+    with open(filename, 'r') as fr:
+        for line in fr:
+            package = line.strip()
+            if package:
+                requires.append(package)
+
+    return requires
+
+
 def read_authors(filename):
     authors = []
     with open(filename, 'r') as fz:
@@ -51,9 +62,7 @@ setup(
 
     namespace_packages=['unifhycontrib'],
 
-    install_requires=[
-        'unifhy==0.1.0'
-    ],
+    install_requires=requirements('requirements.txt'),
 
     zip_safe=False
 )
