@@ -7,6 +7,9 @@ A unifhy-compliant version of the rainfall-runoff model GR4
 .. image:: https://img.shields.io/badge/dynamic/json?url=https://zenodo.org/api/records/5780135&label=doi&query=doi&style=flat-square&color=00b0f0
    :target: https://zenodo.org/badge/latestdoi/355948261
    :alt: DOI
+.. image:: https://img.shields.io/github/workflow/status/unifhy-org/unifhycontrib-gr4/Run%20tests?style=flat-square&label=tests
+   :target: https://github.com/unifhy-org/unifhycontrib-gr4/actions/workflows/run_tests.yml
+   :alt: Tests Status
 
 The GR4 ("Génie Rural à 4 paramètres" [in French]) model is a
 bucket-type rainfall-runoff model featuring four parameters.
