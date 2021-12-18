@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  run-basic-tests:
+  run-tests:
 
     strategy:
       matrix:
