@@ -44,3 +44,14 @@ using the routing store, and the inter-catchment groundwater exchange.
     1. Department of Meteorology, University of Reading
     2. National Centre for Atmospheric Science
 :licence: GPL-2.0
+:codebase: https://github.com/unifhy-org/unifhycontrib-gr4
+
+
+How to install
+~~~~~~~~~~~~~~
+
+This package is available on PyPI, so you can simply run:
+
+.. code-block:: bash
+
+   pip install unifhycontrib-gr4

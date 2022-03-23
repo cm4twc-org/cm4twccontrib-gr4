@@ -32,6 +32,7 @@ class SubSurfaceComponent(unifhy.component.SubSurfaceComponent):
         1. Department of Meteorology, University of Reading
         2. National Centre for Atmospheric Science
     :licence: GPL-2.0
+    :codebase: https://github.com/unifhy-org/unifhycontrib-gr4
     """
 
     _inwards = {
